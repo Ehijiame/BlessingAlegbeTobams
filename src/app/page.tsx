@@ -1,103 +1,147 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+import Sidebar from "../app/components/Sidebar";
+import Header from "../app/components/Header";
+import MenuBar from "../app/Menu";
+import Board, { Task } from "../app/components/Board";
+
+// 👇 initial tasks
+const initialTasks: {
+  todo: Task[];
+  inprogress: Task[];
+  done: Task[];
+} = {
+  todo: [
+    {
+      id: "t1",
+      title: "Design new UI presentation",
+      project: "Dribbble marketing",
+      progress: 7,
+      total: 10,
+      due: "2022-08-24",
+      color: "orange",
+      assignees: ["VH", "AL"],
+    },
+    {
+      id: "t2",
+      title: "Add more ui/ux mockups",
+      project: "Pinterest promotion",
+      progress: 4,
+      total: 10,
+      due: "2022-08-25",
+      color: "orange",
+      assignees: ["JM"],
+    },
+    {
+      id: "t3",
+      title: "Design few mobile screens",
+      project: "Dropbox mobile app",
+      progress: 3,
+      total: 10,
+      due: "2022-08-27",
+      color: "orange",
+      assignees: ["AM"],
+    },
+    {
+      id: "t4",
+      title: "Create a tweet and promote",
+      project: "Twitter marketing",
+      progress: 1,
+      total: 10,
+      due: "2022-08-29",
+      color: "red",
+      assignees: ["JS", "PW"],
+    },
+  ],
+  inprogress: [
+    {
+      id: "ip1",
+      title: "Design system update",
+      project: "Oreo website project",
+      progress: 3,
+      total: 10,
+      due: "2022-11-12",
+      color: "red",
+      assignees: ["VC", "+2"],
+    },
+    {
+      id: "ip2",
+      title: "Create brand guideline",
+      project: "Oreo branding project",
+      progress: 7,
+      total: 10,
+      due: "2022-11-13",
+      color: "orange",
+      assignees: ["NB"],
+    },
+    {
+      id: "ip3",
+      title: "Create wireframe for ios app",
+      project: "Oreo ios app project",
+      progress: 5,
+      total: 10,
+      due: "2022-11-15",
+      color: "orange",
+      assignees: ["AD", "RS"],
+    },
+      {
+      id: "d4",
+      title: "Create ui kit for layout",
+      project: "Crypto mobile app ",
+      progress: 3,
+      total: 10,
+      due: "2022-15-11",
+      color: "red",
+      assignees: ["VL"],
+    },
+  ],
+  done: [
+    {
+      id: "d1",
+      title: "Add product to the market",
+      project: "UI8 marketplace",
+      progress: 10,
+      total: 10,
+      due: "2022-01-06",
+      color: "green",
+      assignees: ["MK"],
+    },
+    {
+      id: "d2",
+      title: "Launch product promotion",
+      project: "Kickstarter campaign",
+      progress: 10,
+      total: 10,
+      due: "2022-01-07",
+      color: "green",
+      assignees: ["KS", "TR"],
+    },
+    {
+      id: "d3",
+      title: "Make twitter banner",
+      project: "Twitter marketing",
+      progress: 10,
+      total: 10,
+      due: "2022-01-10",
+      color: "green",
+      assignees: ["VL"],
+    },
+     
+  ],
+};
+
+export default function Page(): React.ReactElement {
+  const [data, setData] = useState(initialTasks);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+      <Sidebar />
+      <div className="flex flex-col flex-1">
+        <Header />
+        <MenuBar />
+        <Board data={data} setData={setData} />
+      </div>
     </div>
   );
 }
